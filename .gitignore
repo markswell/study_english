@@ -1,0 +1,82 @@
+# FRONTEND
+
+# Compiled output
+/study_english_frontend/dist
+/study_english_frontend/tmp
+/study_english_frontend/out-tsc
+/study_english_frontend/bazel-out
+
+# Node
+/study_english_frontend/node_modules
+/study_english_frontend/npm-debug.log
+/study_english_frontend/yarn-error.log
+
+# IDEs and editors
+/study_english_frontend/.idea/
+/study_english_frontend/.project
+/study_english_frontend/.classpath
+/study_english_frontend/.c9/
+/study_english_frontend/*.launch
+/study_english_frontend/.settings/
+/study_english_frontend/*.sublime-workspace
+
+# Visual Studio Code
+/study_english_frontend/.vscode/*
+/study_english_frontend/!.vscode/settings.json
+/study_english_frontend/!.vscode/tasks.json
+/study_english_frontend/!.vscode/launch.json
+/study_english_frontend/!.vscode/extensions.json
+/study_english_frontend/.history/*
+
+# Miscellaneous
+/study_english_frontend/.angular/cache
+/study_english_frontend/.sass-cache/
+/study_english_frontend/connect.lock
+/study_english_frontend/coverage
+/study_english_frontend/libpeerconnection.log
+/study_english_frontend/testem.log
+/study_english_frontend/typings
+
+# System files
+/study_english_frontend/.DS_Store
+/study_english_frontend/Thumbs.db
+
+#BACKEND
+
+/study-english_backend/HELP.md
+/study-english_backend/.gradle
+/study-english_backend/build/
+/study-english_backend/!gradle/wrapper/gradle-wrapper.jar
+/study-english_backend/!**/src/main/**/build/
+/study-english_backend/!**/src/test/**/build/
+
+### STS ###
+/study-english_backend/.apt_generated
+/study-english_backend/.classpath
+/study-english_backend/.factorypath
+/study-english_backend/.project
+/study-english_backend/.settings
+/study-english_backend/.springBeans
+/study-english_backend/.sts4-cache
+/study-english_backend/bin/
+/study-english_backend/!**/src/main/**/bin/
+/study-english_backend/!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+/study-english_backend/.idea
+/study-english_backend/*.iws
+/study-english_backend/*.iml
+/study-english_backend/*.ipr
+/study-english_backend/out/
+/study-english_backend/!**/src/main/**/out/
+/study-english_backend/!**/src/test/**/out/
+
+### NetBeans ###
+/study-english_backend/nbproject/private/
+/study-english_backend/nbbuild/
+/study-english_backend/dist/
+/study-english_backend/nbdist/
+/study-english_backend/.nb-gradle/
+
+### VS Code ###
+/study-english_backend/.vscode/

@@ -1,0 +1,22 @@
+<div class="round"> 
+    <div class="duration">
+        <div class="title">
+            <span>{{ selectedTitle }}</span>
+        </div>
+        <div class="bar">
+            <progress #progress value="0" max="1"></progress>
+            <div class="point"></div>
+        </div>
+        <div class="time">
+            <p class="inicio">{{convertToMinutes(runtime)}}</p>
+            <p class="fim">{{getSoundLenght()}}</p>
+        </div>
+    </div>
+    <div class="play">
+        <img src="../../assets/images/backward-solid.svg" alt="backward" height="25px" width="25px" (click)="selectPrevius()">
+        <img [hidden]="!paused" src="../../assets/images/play-solid.svg" alt="play" height="25px" width="25px" (click)="play()">
+        <img [hidden]="paused" src="../../assets/images/pause-solid.svg" alt="pause" height="25px" width="25px" (click)="pause()">
+        <img src="../../assets/images/forward-solid.svg" alt="forward" height="25px" width="25px" (click)="selectNext()">
+    </div>
+    <audio #audio (timeupdate)="updateBar($event)" [src]="getSelected()"></audio>
+</div>
