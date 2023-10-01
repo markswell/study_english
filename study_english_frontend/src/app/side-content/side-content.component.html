@@ -1,0 +1,33 @@
+<section class="header-top">
+  <mat-icon class="header-side" (click)="drawer.toggle()" aria-hidden="false" aria-label="Example home icon" fontIcon="vertical_split"></mat-icon>
+  <span><a routerLink="">Study English</a></span>
+</section>
+<div  class="outline-container">
+  <mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+      <div>
+        <mat-accordion *ngFor="let b of books">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header class="white-icon">
+              <mat-panel-title class="white-icon">
+                {{b.book}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <lesson-painel [lessons]="b.lessons" [bookUrl]="b.book"></lesson-painel>
+            </mat-expansion-panel>
+        </mat-accordion>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header class="white-icon">
+              <mat-panel-title class="white-icon">
+                Class
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <video-painel [video]="vid"></video-painel>
+            </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </mat-drawer>
+    <router-outlet></router-outlet>
+  </mat-drawer-container>
+</div>

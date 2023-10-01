@@ -1,0 +1,6 @@
+<section>
+    <div class="link" *ngFor="let l of lessons">
+        <a routerLinkActive="active" routerLink="/lesson" [queryParams]="{data: passParam(l)}">{{ l.lesson }}</a>
+    </div>
+</section>
+
