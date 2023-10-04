@@ -1,11 +1,12 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Audios } from '../common/audio';
 import { UrlServiceService } from '../services/url-service.service';
 
 @Component({
   selector: 'audio-player',
   templateUrl: './audio-player.component.html',
-  styleUrls: ['./audio-player.component.scss']
+  styleUrls: ['./audio-player.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AudioPlayerComponent implements OnInit {
 
@@ -49,7 +50,7 @@ export class AudioPlayerComponent implements OnInit {
     }
   }
 
-  updateBar(evet: Event) {
+  updateBar(event: Event) {
     this.progress.nativeElement.style.width = (Math.floor((this.audio.nativeElement.currentTime / this.audio.nativeElement.duration) * 100)) + '%';
     this.runtime = Math.floor(this.audio.nativeElement.currentTime);
   }

@@ -1,8 +1,6 @@
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Audios } from '../common/audio';
-import { LessonComplete } from '../common/lesson-complete';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lesson',
@@ -12,22 +10,14 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class LessonComponent implements OnInit {
 
   audios: Audios[] = [];
-  bookUrl: string = '';
 
-  constructor(private route: ActivatedRoute, private router: Router, private sanitizer: DomSanitizer) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.route.queryParams.subscribe(p => {
-      let lc: LessonComplete = JSON.parse(p['data']);
-      this.audios = lc.audios;
-      this.bookUrl = lc.bookUrl;
-      console.log(this.bookUrl)
+    this.route.queryParams.subscribe(data => {
+      this.audios = JSON.parse(data['data']);
     });
-  }
-
-  getBook(): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl( this.bookUrl );
   }
 
 }

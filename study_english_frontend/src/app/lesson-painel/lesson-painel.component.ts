@@ -1,7 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Lesson } from '../common/lesson';
-import { LessonComplete } from '../common/lesson-complete';
-import { UrlServiceService } from '../services/url-service.service';
 import { ReadCourseService } from '../services/read-course.service';
 
 @Component({
@@ -9,7 +7,7 @@ import { ReadCourseService } from '../services/read-course.service';
   templateUrl: './lesson-painel.component.html',
   styleUrls: ['./lesson-painel.component.scss']
 })
-export class LessonPainelComponent implements OnInit{
+export class LessonPainelComponent{
   
   @Input({ required: true })
   lessons?: Lesson[];
@@ -20,13 +18,11 @@ export class LessonPainelComponent implements OnInit{
   constructor(private resource: ReadCourseService) {}
 
   passParam(lesson: Lesson): string {
-    let bookname = this.resource.getBook(this.bookUrl.replace(' ', "_"));
-    let lc = new LessonComplete(lesson.audios, bookname);
-    return JSON.stringify(lc);
+    return JSON.stringify(lesson.audios);
   }
 
-  ngOnInit(): void {
-    console.log(this.bookUrl);
+  passBookUrl(): string {
+    return this.resource.getBook(this.bookUrl.replace(' ', "_"));
   }
 
 }
