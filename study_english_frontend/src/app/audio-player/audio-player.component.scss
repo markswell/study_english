@@ -53,3 +53,27 @@ progress {
 .duration {
     width: 100%;
 }
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #ccc;
+    position: relative;
+    cursor: pointer;
+    border-radius: 10px; /* Arredonde as bordas da barra de progresso */
+    overflow: hidden; /* Garanta que a parte interna não saia dos limites */
+
+    margin-top: 5px;
+}
+
+.progress {
+    height: 100%;
+    width: 0;
+    background-color: #db2518;
+    position: absolute;
+    border-radius: 10px; /* Arredonde as bordas da parte interna */
+}
+
+#inverter {
+    transform: scaleX(-1);
+}

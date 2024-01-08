@@ -10,11 +10,13 @@ import { UrlServiceService } from '../services/url-service.service';
 })
 export class AudioPlayerComponent implements OnInit {
 
-  @ViewChild("progress")
-  progress!: ElementRef;
-
   @ViewChild("audio")
   audio!: ElementRef<HTMLAudioElement>;
+
+  @ViewChild('progressBar') 
+  progressBar!: ElementRef;
+  @ViewChild('progress') 
+  progress!: ElementRef;
 
   @Input()
   audios: Audios[] = [];
@@ -23,6 +25,7 @@ export class AudioPlayerComponent implements OnInit {
   selectedTitle: string = "";
   paused: boolean = true;
   runtime: number = 0;
+  progressWidth = '0%';
 
   constructor(private urlService: UrlServiceService){}
 
@@ -53,6 +56,7 @@ export class AudioPlayerComponent implements OnInit {
   updateBar(event: Event) {
     this.progress.nativeElement.style.width = (Math.floor((this.audio.nativeElement.currentTime / this.audio.nativeElement.duration) * 100)) + '%';
     this.runtime = Math.floor(this.audio.nativeElement.currentTime);
+    this.progressWidth = (Math.floor((this.audio.nativeElement.currentTime / this.audio.nativeElement.duration) * 100)) + '%';
   }
 
   selectPrevius() {

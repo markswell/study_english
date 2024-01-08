@@ -3,10 +3,9 @@
         <div class="title">
             <span>{{ selectedTitle }}</span>
         </div>
-        <div class="bar">
-            <progress #progress value="0" max="1"></progress>
-            <div class="point"></div>
-        </div>
+        <div class="progress-bar" #progressBar >
+            <div class="progress" #progress [style.width]="progressWidth"></div>
+          </div>
         <div class="time">
             <p class="inicio">{{convertToMinutes(runtime)}}</p>
             <p class="fim">{{getSoundLenght()}}</p>
