@@ -31,10 +31,10 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public byte[] getAudio(Long bookId, Long lessonId, Long audioId) {
+    public byte[] getAudio(Long bookId, Long lessonId, String audioId) {
         try {
 
-            Path path = getBook(bookId, lessonId);
+            Path path = getBook(bookId.toString(), lessonId.toString());
             String audioName = list(path)
                     .map(f -> f.getFileName().toString())
                     .filter(f -> audioId.equals(Long.parseLong(f.substring(f.length() - 6).replace(".mp3", ""))))
@@ -48,7 +48,7 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public byte[] getVideo(Long classId) {
+    public byte[] getVideo(String classId) {
         try {
             Path path = list(Paths.get(pathFiles.concat("/classes")))
                     .filter(f -> f.toString().endsWith(".mp4"))
@@ -61,7 +61,7 @@ public class MediaServiceImpl implements MediaService {
         }
     }
 
-    private Path getBook(Long bookId, Long lessonId) throws IOException {
+    private Path getBook(String bookId, String lessonId) throws IOException {
         return list(Paths.get(pathFiles))
                 .filter(f -> f.toString().contains("_book_"))
                 .filter(f -> isIdEquals(bookId, f))
@@ -76,7 +76,7 @@ public class MediaServiceImpl implements MediaService {
                 }).findFirst().get();
     }
 
-    private static boolean isIdEquals(Long bookId, Path f) {
+    private static boolean isIdEquals(String bookId, Path f) {
         return bookId.equals(Long.parseLong(f.getFileName().toString().split("_")[0]));
     }
 

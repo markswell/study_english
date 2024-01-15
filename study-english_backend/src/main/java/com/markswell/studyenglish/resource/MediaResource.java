@@ -44,7 +44,7 @@ public class MediaResource {
             @Parameter(description = "It is the lesson id for searching")
             @PathVariable("lessonId") Long lessonId,
             @Parameter(description = "It is the audio id for searching")
-            @PathVariable("audioId") Long audioId) {
+            @PathVariable("audioId") String audioId) {
         return ResponseEntity.ok(mediaService.getAudio(bookId, lessonId, audioId));
     }
 
@@ -56,7 +56,7 @@ public class MediaResource {
     )
     public ResponseEntity<byte[]> getVideo(
             @Parameter(description = "It is the class id for searching")
-            @PathVariable("classId") Long classId) {
+            @PathVariable("classId") String classId) {
         return ResponseEntity.ok(mediaService.getVideo(classId));
     }
 

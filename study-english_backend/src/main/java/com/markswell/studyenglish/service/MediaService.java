@@ -4,7 +4,7 @@ public interface MediaService {
 
     byte[] getPdf(String book);
 
-    byte[] getAudio(Long bookId, Long lessonId, Long audioId);
+    byte[] getAudio(Long bookId, Long lessonId,  String audioId);
 
-    byte[] getVideo(Long classId);
+    byte[] getVideo(String classId);
 }
