@@ -44,7 +44,6 @@ public class PathResource {
             summary = "Book paths",
             description = "It solves paths URL to access audio lessons and PDF's books")
     public ResponseEntity<List<BookDto>> getBooks() throws IOException {
-        InputStream jsoninputStream = this.getClass().getResourceAsStream("/book_path.json");
         return ResponseEntity.ok(pathService.getBooks());
     }
 

@@ -20,6 +20,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 
 import java.io.*;
+import java.util.Collections;
 import java.util.List;
 import java.util.Comparator;
 import java.security.GeneralSecurityException;
@@ -62,6 +63,7 @@ public class GoogleAccessServiceImpl implements GoogleAccessService {
                 .setFields("nextPageToken, files(id, name)")
                 .execute();
         List<File> files = result.getFiles();
+        Collections.sort(files, (a, b) -> a.getName().compareTo(b.getName()));
         if (files == null || files.isEmpty()) {
             return "No files found.";
         } else {
@@ -70,6 +72,7 @@ public class GoogleAccessServiceImpl implements GoogleAccessService {
             int count = 0;
             sort(files, Comparator.comparing(File::getName));
             for (File file : files) {
+                if(file.getName().contains(".pdf") && file.getName().contains("book"))
                 stringBuilder.append("%d %s %s\n".formatted(++count, file.getName(), file.getId()));
             }
             return stringBuilder.toString();

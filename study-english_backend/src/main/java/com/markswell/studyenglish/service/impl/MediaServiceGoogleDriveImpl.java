@@ -2,9 +2,14 @@ package com.markswell.studyenglish.service.impl;
 
 import com.markswell.studyenglish.service.GoogleAccessService;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.context.annotation.Primary;
 import com.markswell.studyenglish.service.MediaService;
+import org.springframework.util.FileCopyUtils;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 @Service
 @Primary
@@ -15,7 +20,13 @@ public class MediaServiceGoogleDriveImpl implements MediaService {
 
     @Override
     public byte[] getPdf(String book) {
-        return getFileBytes(book);
+        try(InputStream input = getClass().getResourceAsStream("/%s.pdf".formatted(book))) {
+            return FileCopyUtils.copyToByteArray(input);
+
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @Override
@@ -25,7 +36,7 @@ public class MediaServiceGoogleDriveImpl implements MediaService {
 
     @Override
     public byte[] getVideo(String classId) {
-        return new byte[0];
+        return getFileBytes(classId);
     }
 
     private byte[] getFileBytes(String fileId) {

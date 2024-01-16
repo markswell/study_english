@@ -1,7 +1,8 @@
 import { Lesson } from "./lesson";
 
 export interface Book {
-    id: number;
+    id: string;
     book: string;
+    pdf: string;
     lessons: Lesson[];
 }
