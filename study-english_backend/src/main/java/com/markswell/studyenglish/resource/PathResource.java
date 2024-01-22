@@ -25,7 +25,7 @@ public class PathResource {
 
     private final PathService pathService;
 
-    @CrossOrigin("*")
+//    @CrossOrigin("*")
     @GetMapping(value = "/book", produces = APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Book paths",
@@ -34,7 +34,7 @@ public class PathResource {
         return ResponseEntity.ok(pathService.getBooks());
     }
 
-    @CrossOrigin("*")
+//    @CrossOrigin("*")
     @GetMapping(value = "/video", produces = APPLICATION_JSON_VALUE)
     @Operation(
             summary = "Video paths",

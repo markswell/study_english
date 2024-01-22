@@ -20,7 +20,7 @@ public class MediaResource {
 
     private final MediaService mediaService;
 
-    @CrossOrigin("*")
+//    @CrossOrigin("*")
     @GetMapping(value = "/{book}", produces = APPLICATION_PDF_VALUE)
     @Operation(
             summary = "Book",
@@ -32,7 +32,7 @@ public class MediaResource {
         return ResponseEntity.ok(mediaService.getPdf(book));
     }
 
-    @CrossOrigin("*")
+//    @CrossOrigin("*")
     @GetMapping(value = "/{bookId}/{lessonId}/{audioId}", produces = APPLICATION_OCTET_STREAM_VALUE)
     @Operation(
             summary = "Audio",
@@ -48,7 +48,7 @@ public class MediaResource {
         return ResponseEntity.ok(mediaService.getAudio(bookId, lessonId, audioId));
     }
 
-    @CrossOrigin("*")
+//    @CrossOrigin("*")
     @GetMapping(value = "/class/{classId}", produces = APPLICATION_OCTET_STREAM_VALUE)
     @Operation(
             summary = "Video",

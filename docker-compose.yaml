@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  study-english-api:
+    build:
+      context: .
+      dockerfile: ./study-english_backend/Dockerfile
+    image: markswell/study-english-api:latest
+    container_name: study-english-api
+    ports:
+      - "8081:8081"
+    networks:
+      - study-english
+    volumes:
+      - assets:/opt
+
+  study-english-frontend:
+    build:
+      context: .
+      dockerfile: ./study_english_frontend/Dockerfile
+    image: markswell/study-english-frontend:latest
+    container_name: study-english-frontend
+    ports:
+      - "8000:80"
+    networks:
+      - study-english
+
+networks:
+  study-english:
+    driver: bridge
+
+volumes:
+  assets:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: {LOCAL_FILES_PATH}
+  

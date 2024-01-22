@@ -12,6 +12,14 @@ java {
 	sourceCompatibility = '17'
 }
 
+springBoot {
+	mainClass = 'com.markswell.studyenglish.StudyEnglishApplication'
+}
+
+bootJar {
+	archiveFileName = 'study-english.jar'
+}
+
 repositories {
 	mavenLocal()
 	mavenCentral()
@@ -39,7 +47,7 @@ publishing {
 		maven(MavenPublication) {
 			groupId = 'com.markswell'
 			artifactId = 'study-english'
-			version = '0.0.1-SNAPSHOT'
+			version = 'v1.0.0'
 
 			from components.java
 		}

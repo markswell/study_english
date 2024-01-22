@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -6,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class UrlServiceService {
 
   getBasePath(): string {
-    return 'http://localhost:8081/study_english';
+    return `${environment.API}:8081/study_english`;
   }
 
   getBookListPath(): string {
