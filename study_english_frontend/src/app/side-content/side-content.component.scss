@@ -8,6 +8,7 @@
   height: 100%;
   align-items: center;
   justify-content: center;
+  overflow-x: hidden;
 }
 
 .example-sidenav {
@@ -17,7 +18,7 @@
 }
 
 .header-top {
-    height: 5rem;
+    height: 10%;
     background-color: #f44336;
     color: #f0f8ff;
     margin: 0px;
@@ -64,8 +65,16 @@ a {
 }
 
 .outline-container {
-  height: 100%; 
+  height: 90%; 
   width: 100%;
   display: flex;
   justify-content: center;
 }
+
+.disable_ripple:hover{
+  background: #f44336 !important;
+  }
+
+body { 
+  overflow-y: hidden; 
+ }

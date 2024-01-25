@@ -16,6 +16,7 @@ import { VideoPainelComponent } from './video-painel/video-painel.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { BookPainelModule } from './book-painel/book-painel.module';
 import { AudioPlayerModule } from './audio-player/audio-player.module';
+import { ExplaningComponent } from './explaning/explaning.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { AudioPlayerModule } from './audio-player/audio-player.module';
         LessonPainelComponent,
         LessonComponent,
         VideoPainelComponent,
-        VideoPlayerComponent
+        VideoPlayerComponent,
+        ExplaningComponent
     ],
     providers: [],
     bootstrap: [AppComponent],

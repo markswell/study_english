@@ -6,9 +6,9 @@
   <mat-drawer-container class="example-container" autosize>
     <mat-drawer #drawer class="example-sidenav" mode="side">
       <div>
-        <mat-accordion *ngFor="let b of books">
-          <mat-expansion-panel>
-            <mat-expansion-panel-header class="white-icon">
+        <mat-accordion hideToggle *ngFor="let b; index as i of books" mutli="false">
+          <mat-expansion-panel class="mat-elevation-z0" [expanded]="step === i + 1" (opened)="setStep(i + 1)">
+            <mat-expansion-panel-header class="white-icon disable_ripple">
               <mat-panel-title class="white-icon">
                 {{b.book}}
               </mat-panel-title>
@@ -16,9 +16,9 @@
             <lesson-painel [lessons]="b.lessons" [bookUrl]="b.book"></lesson-painel>
             </mat-expansion-panel>
         </mat-accordion>
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header class="white-icon">
+        <mat-accordion hideToggle>
+          <mat-expansion-panel class="mat-elevation-z0" [expanded]="step === 6" (opened)="setStep(6)">
+            <mat-expansion-panel-header class="white-icon disable_ripple">
               <mat-panel-title class="white-icon">
                 Class
               </mat-panel-title>
