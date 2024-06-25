@@ -7,4 +7,6 @@ public interface MediaService {
     byte[] getAudio(Long bookId, Long lessonId, Long audioId);
 
     byte[] getVideo(Long classId);
+
+    byte[] getThumbnail(Long classId);
 }

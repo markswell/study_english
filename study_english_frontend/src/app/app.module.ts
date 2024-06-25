@@ -12,7 +12,6 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
 import { LessonPainelComponent } from './lesson-painel/lesson-painel.component';
 import { LessonComponent } from './lesson/lesson.component';
-import { VideoPainelComponent } from './video-painel/video-painel.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { BookPainelModule } from './book-painel/book-painel.module';
 import { AudioPlayerModule } from './audio-player/audio-player.module';
@@ -24,7 +23,6 @@ import { ExplaningComponent } from './explaning/explaning.component';
         SideContentComponent,
         LessonPainelComponent,
         LessonComponent,
-        VideoPainelComponent,
         VideoPlayerComponent,
         ExplaningComponent
     ],

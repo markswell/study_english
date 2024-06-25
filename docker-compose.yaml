@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: ./study-english_backend/Dockerfile
     image: markswell/study-english-api:latest
+    restart: always
     container_name: study-english-api
     ports:
       - "8081:8081"
@@ -19,6 +20,7 @@ services:
       context: .
       dockerfile: ./study_english_frontend/Dockerfile
     image: markswell/study-english-frontend:latest
+    restart: always
     container_name: study-english-frontend
     ports:
       - "8000:80"
@@ -36,4 +38,3 @@ volumes:
       type: none
       o: bind
       device: {LOCAL_FILES_PATH}
-  

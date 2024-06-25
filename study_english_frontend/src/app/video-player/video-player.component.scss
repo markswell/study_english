@@ -1,6 +1,10 @@
 .video-player {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.video-painel {
+    margin: 2%;
 }

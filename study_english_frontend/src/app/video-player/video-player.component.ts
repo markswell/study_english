@@ -1,6 +1,7 @@
 import { Component,  OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { UrlServiceService } from '../services/url-service.service';
+import { ReadCourseService } from '../services/read-course.service';
+import { Video } from '../common/video';
 
 @Component({
   selector: 'video-player',
@@ -10,14 +11,25 @@ import { UrlServiceService } from '../services/url-service.service';
 export class VideoPlayerComponent implements OnInit{
 
   url!: string;
+  classPath!: Video[];
 
-  constructor(private route: ActivatedRoute, private path: UrlServiceService) {}
+  constructor(
+    private path: UrlServiceService,
+    private classPathService: ReadCourseService) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(p => {
-      this.url = this.path.getBasePath() + p['data'];
-      console.log(this.url);
-    });
+    this.classPathService.listVideos().subscribe(c => {
+        this.classPath = c.map( cc => {
+          cc.url = this.path.getBasePath() + cc.url;
+          return cc;
+        })
+        console.log(this.classPath);
+    })
+  }
+
+  getThumbailUrl(url: string): string {
+    console.log(url + '/thumbnail');
+    return url + '/thumbnail';
   }
 
 }

@@ -60,4 +60,15 @@ public class MediaResource {
         return ResponseEntity.ok(mediaService.getVideo(classId));
     }
 
+    @GetMapping(value = "/class/{classId}/thumbnail", produces = APPLICATION_OCTET_STREAM_VALUE)
+    @Operation(
+            summary = "Video",
+            description = "It solves video's class file"
+    )
+    public ResponseEntity<byte[]> getThumbnail(
+            @Parameter(description = "It is the class id for searching")
+            @PathVariable("classId") Long classId) {
+        return ResponseEntity.ok(mediaService.getThumbnail(classId));
+    }
+
 }

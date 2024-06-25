@@ -61,6 +61,20 @@ public class MediaServiceImpl implements MediaService {
         }
     }
 
+    @Override
+    public byte[] getThumbnail(Long classId) {
+        try {
+            Path path = list(Paths.get(pathFiles.concat("/classes")))
+                    .filter(f -> f.toString().endsWith(".png"))
+                    .filter(f -> isIdEquals(classId, f))
+                    .findFirst()
+                    .get();
+            return Files.readAllBytes(path);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     private Path getBook(Long bookId, Long lessonId) throws IOException {
         return list(Paths.get(pathFiles))
                 .filter(f -> f.toString().contains("_book_"))
