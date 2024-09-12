@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { UrlServiceService } from '../services/url-service.service';
 
 @Component({
   selector: 'book-painel',
@@ -10,15 +10,17 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BookPainelComponent implements OnInit{
 
+  @Input({ required: true })
   bookUrl: string = "";
 
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer) {}
+  constructor(private sanitizer: DomSanitizer, private urlService: UrlServiceService) {}
   
-  ngOnInit(): void {
-    this.bookUrl = this.route.snapshot.queryParams['bookUrl'];
-  }
+  ngOnInit(): void {}
 
   getBook(): SafeResourceUrl {
+    this.bookUrl = this.urlService.getBasePath() + this.bookUrl;
+    this.bookUrl = this.bookUrl.replace(/\/[^\/]*$/, '/pdf');
+
     return this.sanitizer.bypassSecurityTrustResourceUrl( this.bookUrl );
   }
 }

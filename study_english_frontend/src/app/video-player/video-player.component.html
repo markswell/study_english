@@ -1,7 +1,9 @@
-<div class="video-player">
-    <video *ngFor="let cp of classPath" 
-    class="video-painel"
-    poster={{getThumbailUrl(cp.url)}}
-    [src]="cp.url" width="350em" controls>
-  </video>
+<div class="video-container">
+  <div class="video-player">
+      <video *ngFor="let cp of classPath" 
+      class="video-painel"
+      poster={{getThumbailUrl(cp.url)}}
+      [src]="cp.url" width="350em" controls>
+    </video>
+  </div>
 </div>
