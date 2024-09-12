@@ -88,7 +88,7 @@ public class PathServiceImpl implements PathService {
 
     private LessonDto convertLesson(Path path) {
         try {
-            var audioDtos = list(path).sorted().map(this::convertAudio).toList();
+            var audioDtos = list(path).filter(p -> p.toString().endsWith(".mp3")).sorted().map(this::convertAudio).toList();
             var splitName = path.getFileName().toString().split("_");
             var fileName = splitName[1].concat(" ").concat(splitName[2]);
             var id = Long.parseLong(splitName[0]);
@@ -106,7 +106,6 @@ public class PathServiceImpl implements PathService {
         String id = audioName.substring(audioName.replace(".mp3", "").length() - 2).replace(".mp3", "");
         String url = "/media/%s/%s/%s".formatted(bookId, lessonId, Integer.parseInt(id));
         String title = audioName.replace(".mp3", "");
-        String cover = "";
         return new AudioDto(Long.parseLong(id), url, title, audioName);
     }
 

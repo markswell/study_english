@@ -22,11 +22,22 @@ public class MediaServiceImpl implements MediaService {
     @Override
     public byte[] getPdf(String book) {
         try {
-            Path first = getBooks(pathFiles).filter(f -> f.toString().contains(book)).findFirst().get();
+            Path first = getBookPath(book);
             Path path = list(first).filter(f -> f.toString().endsWith(".pdf")).toList().get(0);
             return Files.readAllBytes(path);
         } catch (IOException e) {
             return null;
+        }
+    }
+
+    @Override
+    public byte[] getPdfByLesson(Long book, Long lessonId) {
+        try {
+            Path bookPath = getBook(book, lessonId);
+            Path path = list(bookPath).filter(p -> p.toString().endsWith(".pdf")).findFirst().get();
+            return Files.readAllBytes(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -88,6 +99,10 @@ public class MediaServiceImpl implements MediaService {
                         return null;
                     }
                 }).findFirst().get();
+    }
+
+    private Path getBookPath(String book) throws IOException {
+        return getBooks(pathFiles).filter(f -> f.toString().contains(book)).findFirst().get();
     }
 
     private static boolean isIdEquals(Long bookId, Path f) {

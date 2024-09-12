@@ -1,16 +1,15 @@
 package com.markswell.studyenglish.resource;
 
-import com.markswell.studyenglish.service.MediaService;
+import lombok.RequiredArgsConstructor;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.markswell.studyenglish.service.MediaService;
 
-import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_PDF_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM_VALUE;
 
 @RestController
 @RequestMapping("/media")
@@ -20,7 +19,6 @@ public class MediaResource {
 
     private final MediaService mediaService;
 
-//    @CrossOrigin("*")
     @GetMapping(value = "/{book}", produces = APPLICATION_PDF_VALUE)
     @Operation(
             summary = "Book",
@@ -32,7 +30,19 @@ public class MediaResource {
         return ResponseEntity.ok(mediaService.getPdf(book));
     }
 
-//    @CrossOrigin("*")
+    @GetMapping(value = "/{book}/{lessonId}/pdf", produces = APPLICATION_PDF_VALUE)
+    @Operation(
+            summary = "Book",
+            description = "It solves PDF's book file"
+    )
+    public ResponseEntity<byte[]> getBookPdfByLesson(
+            @Parameter(description = "It is the book name for searching")
+            @PathVariable("book") Long book,
+            @Parameter(description = "It is the lesson number to search")
+            @PathVariable("lessonId") Long lessonId) {
+        return ResponseEntity.ok(mediaService.getPdfByLesson(book, lessonId));
+    }
+
     @GetMapping(value = "/{bookId}/{lessonId}/{audioId}", produces = APPLICATION_OCTET_STREAM_VALUE)
     @Operation(
             summary = "Audio",
@@ -48,7 +58,6 @@ public class MediaResource {
         return ResponseEntity.ok(mediaService.getAudio(bookId, lessonId, audioId));
     }
 
-//    @CrossOrigin("*")
     @GetMapping(value = "/class/{classId}", produces = APPLICATION_OCTET_STREAM_VALUE)
     @Operation(
             summary = "Video",
