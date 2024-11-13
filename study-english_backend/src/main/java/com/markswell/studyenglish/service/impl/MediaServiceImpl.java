@@ -48,7 +48,7 @@ public class MediaServiceImpl implements MediaService {
             Path path = getBook(bookId, lessonId);
             String audioName = list(path)
                     .map(f -> f.getFileName().toString())
-                    .filter(f -> audioId.equals(Long.parseLong(f.substring(f.length() - 6).replace(".mp3", ""))))
+                    .filter(f -> !f.endsWith(".pdf") && audioId.equals(Long.parseLong(f.substring(f.length() - 6).replace(".mp3", ""))))
                     .findFirst()
                     .get();
             byte[] bytes = Files.readAllBytes(Path.of(path.toString().concat("/").concat(audioName)));
