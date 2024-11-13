@@ -37,4 +37,4 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: {LOCAL_FILES_PATH}
+      device: ${LOCAL_FILES_PATH}
