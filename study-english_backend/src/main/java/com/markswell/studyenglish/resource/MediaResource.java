@@ -8,8 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.markswell.studyenglish.service.MediaService;
 
-import static org.springframework.http.MediaType.APPLICATION_PDF_VALUE;
-import static org.springframework.http.MediaType.APPLICATION_OCTET_STREAM_VALUE;
+import static org.springframework.http.MediaType.*;
 
 @RestController
 @RequestMapping("/media")
@@ -43,7 +42,7 @@ public class MediaResource {
         return ResponseEntity.ok(mediaService.getPdfByLesson(book, lessonId));
     }
 
-    @GetMapping(value = "/{bookId}/{lessonId}/{audioId}", produces = APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "/{bookId}/{lessonId}/{audioId}", produces = "audio/mpeg")
     @Operation(
             summary = "Audio",
             description = "It solves audio's lesson file"
@@ -54,19 +53,22 @@ public class MediaResource {
             @Parameter(description = "It is the lesson id for searching")
             @PathVariable("lessonId") Long lessonId,
             @Parameter(description = "It is the audio id for searching")
-            @PathVariable("audioId") Long audioId) {
-        return ResponseEntity.ok(mediaService.getAudio(bookId, lessonId, audioId));
+            @PathVariable("audioId") Long audioId,
+            @RequestHeader(value = "Range", required = false) String rangeHeader) {
+
+        return mediaService.getAudioByRange(bookId, lessonId, audioId, rangeHeader);
     }
 
-    @GetMapping(value = "/class/{classId}", produces = APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "/class/{classId}", produces = "video/mp4")
     @Operation(
             summary = "Video",
             description = "It solves video's class file"
     )
     public ResponseEntity<byte[]> getVideo(
             @Parameter(description = "It is the class id for searching")
-            @PathVariable("classId") Long classId) {
-        return ResponseEntity.ok(mediaService.getVideo(classId));
+            @PathVariable("classId") Long classId,
+            @RequestHeader(value = "Range", required = false) String rangeHeader) {
+        return mediaService.getVideoByRage(classId, rangeHeader);
     }
 
     @GetMapping(value = "/class/{classId}/thumbnail", produces = APPLICATION_OCTET_STREAM_VALUE)

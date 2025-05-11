@@ -1,33 +1,38 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Audios } from '../common/audio';
 import { UrlServiceService } from '../services/url-service.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'audio-player',
   templateUrl: './audio-player.component.html',
-  styleUrls: ['./audio-player.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./audio-player.component.scss']
 })
 export class AudioPlayerComponent implements OnInit {
 
   @ViewChild("audio")
   audio!: ElementRef<HTMLAudioElement>;
 
-  @ViewChild('progressBar') 
+  @ViewChild('progressBar')
   progressBar!: ElementRef;
-  @ViewChild('progress') 
+
+  @ViewChild('progress')
   progress!: ElementRef;
 
   @Input()
   audios: Audios[] = [];
+
   index: number = 0;
   selectedUrl: string = "";
   selectedTitle: string = "";
   paused: boolean = true;
   runtime: number = 0;
   progressWidth = '0%';
+  isDragging = false;
+  private isSeeking = false;
+  private seekPosition = 0;
 
-  constructor(private urlService: UrlServiceService){}
+  constructor(private urlService: UrlServiceService, private cdRef: ChangeDetectorRef){}
 
   ngOnInit(): void {
     this.index = 0;
@@ -46,7 +51,6 @@ export class AudioPlayerComponent implements OnInit {
 
   selectNext() {
     if(this.audios.length >= this.index) {
-      console.log('selectNext')
       this.index++;
       this.onChangeIndex();
       this.paused = true;
@@ -54,9 +58,80 @@ export class AudioPlayerComponent implements OnInit {
   }
 
   updateBar(event: Event) {
-    this.progress.nativeElement.style.width = (Math.floor((this.audio.nativeElement.currentTime / this.audio.nativeElement.duration) * 100)) + '%';
-    this.runtime = Math.floor(this.audio.nativeElement.currentTime);
-    this.progressWidth = (Math.floor((this.audio.nativeElement.currentTime / this.audio.nativeElement.duration) * 100)) + '%';
+    if (!this.isSeeking) {
+      const currentTime = this.audio.nativeElement.currentTime;
+      const duration = this.audio.nativeElement.duration;
+      const progressPercent = (currentTime / duration) * 100;
+
+      this.progressWidth = progressPercent + '%';
+      this.runtime = Math.floor(currentTime);
+    }
+  }
+
+  startSeek(event: MouseEvent) {
+    this.isSeeking = true;
+    this.updateSeekPosition(event);
+  }
+
+  duringSeek(event: MouseEvent) {
+    if (this.isSeeking) {
+      this.updateSeekPosition(event);
+    }
+  }
+
+  endSeek(event: MouseEvent) {
+    if (this.isSeeking) {
+      this.updateSeekPosition(event);
+      this.audio.nativeElement.currentTime = this.seekPosition;
+      this.isSeeking = false;
+
+      if (!this.paused) {
+        this.audio.nativeElement.play().catch(e => console.error(e));
+      }
+    }
+
+  }
+
+  private updateSeekPosition(event: MouseEvent) {
+    const progressBar = this.progressBar.nativeElement;
+    const progressBarRect = progressBar.getBoundingClientRect();
+    const clickPosition = event.clientX - progressBarRect.left;
+    const progressBarWidth = progressBarRect.width;
+    const percentageClicked = Math.min(1, Math.max(0, clickPosition / progressBarWidth));
+
+    this.seekPosition = percentageClicked * this.audio.nativeElement.duration;
+    this.progressWidth = (percentageClicked * 100) + '%';
+    this.runtime = Math.floor(this.seekPosition);
+  }
+
+  seek(event: MouseEvent) {
+    if (!this.audio?.nativeElement) return;
+
+    const progressBar = this.progressBar.nativeElement;
+    const progressBarRect = progressBar.getBoundingClientRect();
+    const clickPosition = event.clientX - progressBarRect.left;
+    const progressBarWidth = progressBarRect.width;
+    const percentageClicked = clickPosition / progressBarWidth;
+
+    this.audio.nativeElement.currentTime = percentageClicked * this.audio.nativeElement.duration;
+
+    this.progressWidth = (percentageClicked * 100) + '%';
+  }
+
+
+
+  startDrag() {
+    this.isDragging = true;
+  }
+
+  duringDrag(event: MouseEvent) {
+    if (this.isDragging) {
+      this.seek(event);
+    }
+  }
+
+  endDrag() {
+    this.isDragging = false;
   }
 
   selectPrevius() {

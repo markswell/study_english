@@ -1,14 +1,16 @@
 package com.markswell.studyenglish.service;
 
+import org.springframework.http.ResponseEntity;
+
 public interface MediaService {
 
     byte[] getPdf(String book);
 
     byte[] getPdfByLesson(Long book, Long lessonId);
 
-    byte[] getAudio(Long bookId, Long lessonId, Long audioId);
+    ResponseEntity<byte[]> getAudioByRange(Long bookId, Long lessonId, Long audioId, String rangeHeader);
 
-    byte[] getVideo(Long classId);
+    ResponseEntity<byte[]> getVideoByRage(Long classId, String rangeHeader);
 
     byte[] getThumbnail(Long classId);
 }

@@ -3,7 +3,11 @@
         <div class="title">
             <span>{{ selectedTitle }}</span>
         </div>
-        <div class="progress-bar" #progressBar >
+        <div class="progress-bar" #progressBar  
+            (mousedown)="startSeek($event)"
+            (mousemove)="duringSeek($event)"
+            (mouseup)="endSeek($event)"
+            (mouseleave)="endSeek($event)">
             <div class="progress" #progress [style.width]="progressWidth"></div>
           </div>
         <div class="time">
