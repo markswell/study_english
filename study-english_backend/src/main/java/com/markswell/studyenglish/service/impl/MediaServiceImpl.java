@@ -48,17 +48,13 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     public ResponseEntity<byte[]> getAudioByRange(Long bookId, Long lessonId, Long audioId, String rangeHeader) {
-        byte[] audio = getAudio(bookId, lessonId, audioId);
-        return getResponseEntityByRange(rangeHeader, audio, "audio/mpeg");
+        return getResponseEntityByRange(rangeHeader, getAudio(bookId, lessonId, audioId), "audio/mpeg");
     }
 
     @Override
     public ResponseEntity<byte[]> getVideoByRage(Long classId, String rangeHeader) {
         try {
-            byte[] video = getVideo(classId);
-
-            return getResponseEntityByRange(rangeHeader, video, "video/mp4");
-
+            return getResponseEntityByRange(rangeHeader, getVideo(classId), "video/mp4");
         } catch (IOException e) {
             return null;
         }
@@ -78,30 +74,30 @@ public class MediaServiceImpl implements MediaService {
         }
     }
 
-    private static ResponseEntity<byte[]> getResponseEntityByRange(String rangeHeader, byte[] audio, String mediaType) {
+    private static ResponseEntity<byte[]> getResponseEntityByRange(String rangeHeader, byte[] bytes, String mediaType) {
         try {
             if(Objects.isNull(rangeHeader)) {
                 return ResponseEntity.ok()
                         .contentType(parseMediaType(mediaType))
-                        .contentLength(audio.length)
+                        .contentLength(bytes.length)
                         .header("Accept-Ranges", "bytes")
-                        .body(audio);
+                        .body(bytes);
             }
             String[] ranges = rangeHeader.substring("bytes=".length()).split("-");
             int from = Integer.parseInt(ranges[0]);
-            int to = ranges.length > 1 ? Integer.parseInt(ranges[1]) : audio.length - 1;
+            int to = ranges.length > 1 ? Integer.parseInt(ranges[1]) : bytes.length - 1;
 
-            byte[] partialData = Arrays.copyOfRange(audio, from, to + 1);
+            byte[] partialData = Arrays.copyOfRange(bytes, from, to + 1);
 
             return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
                     .contentType(parseMediaType(mediaType))
                     .header("Accept-Ranges", "bytes")
-                    .header("Content-Range", "bytes " + from + "-" + to + "/" + audio.length)
+                    .header("Content-Range", "bytes " + from + "-" + to + "/" + bytes.length)
                     .contentLength(partialData.length)
                     .body(partialData);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE)
-                    .header("Content-Range", "bytes */" + audio.length)
+                    .header("Content-Range", "bytes */" + bytes.length)
                     .build();
         }
     }
@@ -138,8 +134,7 @@ public class MediaServiceImpl implements MediaService {
                     .filter(f -> !f.endsWith(".pdf") && audioId.equals(Long.parseLong(f.substring(f.length() - 6).replace(".mp3", ""))))
                     .findFirst()
                     .get();
-            byte[] bytes = Files.readAllBytes(Path.of(path.toString().concat("/").concat(audioName)));
-            return bytes;
+            return Files.readAllBytes(Path.of(path.toString().concat("/").concat(audioName)));
         } catch (IOException e) {
             return null;
         }
@@ -151,8 +146,7 @@ public class MediaServiceImpl implements MediaService {
                 .filter(f -> isIdEquals(classId, f))
                 .findFirst()
                 .get();
-        byte[] video = Files.readAllBytes(path);
-        return video;
+        return Files.readAllBytes(path);
     }
 
 }
