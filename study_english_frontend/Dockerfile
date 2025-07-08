@@ -1,7 +1,7 @@
 FROM nginx:latest
 
-ARG BUNDLE=./study_english_frontend/dist/study_english
-ARG SERVER_CONFIG=./study_english_frontend/nginx.conf
+ARG BUNDLE=./dist/study_english
+ARG SERVER_CONFIG=./nginx.conf
 
 ADD ${BUNDLE} /usr/share/nginx/html/
 
