@@ -1,4 +1,4 @@
-# Complete Guide: Setting Up Ingress on Kubernetes Kind for Your Application
+# Complete Guide: Setting Up Ingress on Kubernetes Kind for this Application
 Detailed step-by-step guide from cluster creation to having the application working with Ingress:
 
 Kubernetes Kind and kubectl were used to test this deployment.
