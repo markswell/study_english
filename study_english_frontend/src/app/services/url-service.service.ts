@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 export class UrlServiceService {
 
   getBasePath(): string {
-    return `${environment.API}:8081/study_english`;
+    return `${environment.API}/study_english`;
   }
 
   getBookListPath(): string {
