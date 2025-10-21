@@ -1,0 +1,12 @@
+<div class="video-painel">
+  <img src={{getThumbailUrl(url)}} width="300em" (click)="openVideo()"  />
+</div>
+<dialog #myDialog (close)="closeModal()" class="withou-border without-background my-dialog">
+  <div class="dialog-modal">
+    <button class="without-background withou-border" (click)="closeModal()">x</button>
+    <video poster={{getThumbailUrl(url)}} [src]="url" width="100%" controls #videoPlayer>
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  
+</dialog>
