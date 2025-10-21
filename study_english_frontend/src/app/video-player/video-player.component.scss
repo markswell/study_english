@@ -5,11 +5,8 @@
     flex-direction: row;
 }
 
-.video-painel {
-    margin: 2%;
-}
-
 .video-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
 }

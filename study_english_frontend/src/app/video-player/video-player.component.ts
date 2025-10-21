@@ -2,6 +2,7 @@ import { Component,  OnInit } from '@angular/core';
 import { UrlServiceService } from '../services/url-service.service';
 import { ReadCourseService } from '../services/read-course.service';
 import { Video } from '../common/video';
+import { VideoModalComponent } from '../video-modal/video-modal.component';
 
 @Component({
   selector: 'video-player',
@@ -10,7 +11,6 @@ import { Video } from '../common/video';
 })
 export class VideoPlayerComponent implements OnInit{
 
-  url!: string;
   classPath!: Video[];
 
   constructor(
@@ -23,7 +23,6 @@ export class VideoPlayerComponent implements OnInit{
           cc.url = this.path.getBasePath() + cc.url;
           return cc;
         })
-        console.log(this.classPath);
     })
   }
 
