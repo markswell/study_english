@@ -4,13 +4,13 @@ Detailed step-by-step guide from cluster creation to having the application work
 Kubernetes Kind and kubectl were used to test this deployment.
 
 #### Step 1: Create the Kind cluster configuration file
-The example kind-config.yaml file can be found in the project's root folder.
+The example kind-config.yaml file can be found in the project's kubernetes folder.
 
 #### Step 2: Create the cluster with the configuration
 Run:
 
 ```bash
-kind create cluster --name study-english --config kind-config.yaml
+cd kubernetes/ && kind create cluster --name study-english --config kind-config.yaml && cd ../
 ```
 
 #### Step 3: Install the NGINX Ingress Controller
@@ -32,12 +32,14 @@ For each image (frontend and backend):
 
 bash >>
 bash
-docker build -t markswell/study-english-frontend:vkubernetes ../study_english_frontend
-docker build -t markswell/study-english-api:vkubernetes ./study-english_backend
+cd ./study_english_frontend && ng build --configuration production && cd ../
+docker build -t markswell/study-english-frontend:latest ./study_english_frontend
+cd ./study-english_backend && ./gradlew clean build && cd ../
+docker build -t markswell/study-english-api:latest ./study-english_backend
 Load into the Kind cluster
 bash
-kind load docker-image markswell/study-english-api:vkubernetes --name study-english
-kind load docker-image markswell/study-english-frontend:vkubernetes --name study-english
+kind load docker-image markswell/study-english-api:latest --name study-english
+kind load docker-image markswell/study-english-frontend:latest --name study-english
 Step 5: Create Deployments and Services
 The deployments.yaml file can be found in the project's root folder.
 
@@ -45,7 +47,7 @@ Apply:
 
 bash >>
 bash
-kubectl apply -f deployments.yaml
+cd kubernetes/ && kubectl apply -f deployments.yaml && cd ../
 Step 6: Configure Ingress
 The ingress.yaml file can be found in the project's root folder.
 
@@ -53,7 +55,7 @@ Apply:
 
 bash >>
 bash
-kubectl apply -f ingress.yaml
+cd kubernetes/ && kubectl apply -f ingress.yaml && cd ../
 Step 7: Configure /etc/hosts (Optional)
 Edit your /etc/hosts file (Linux/Mac) or C:\Windows\System32\drivers\etc\hosts (Windows):
 
